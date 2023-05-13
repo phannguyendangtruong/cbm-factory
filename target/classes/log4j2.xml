@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration isClose="INFO" monitorInterval="30">
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level %logger{36} - [%X{traceId}]- %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="false">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="infoLog" fileName="logs/info.log" filePattern="logs/%d{yyyy-MM-dd}-info-%i.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <!--                 <SizeBasedTriggeringPolicy size="50 MB" /> -->
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="errorLog" fileName="logs/error.log" filePattern="logs/%d{yyyy-MM-dd}-error-%i.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <!--                 <SizeBasedTriggeringPolicy size="19500KB" /> -->
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="warnLog" fileName="logs/warn.log" filePattern="logs/%d{yyyy-MM-dd}-warn-%i.log">
+            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <!--                 <SizeBasedTriggeringPolicy size="19500KB" /> -->
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="debugLog" fileName="logs/debug.log" filePattern="logs/%d{yyyy-MM-dd}-debug-%i.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <!--                 <SizeBasedTriggeringPolicy size="19500KB" /> -->
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="logs" additivity="false">
+            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="warnLog"/>
+            <AppenderRef ref="Console" />
+        </Logger>
+
+        <Logger name="org.hibernate" level="error" additivity="false">
+            <AppenderRef ref="errorLog"/>
+        </Logger>
+
+        <Logger name="com.zaxxer" level="error" additivity="false">
+            <AppenderRef ref="errorLog"/>
+        </Logger>
+
+        <Logger name="org" level="error" additivity="false">
+            <AppenderRef ref="errorLog"/>
+        </Logger>
+
+        <Logger name="io" level="error" additivity="false">
+            <AppenderRef ref="errorLog"/>
+        </Logger>
+
+        <Root level="all">
+            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="warnLog"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
