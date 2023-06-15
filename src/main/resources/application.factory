@@ -35,6 +35,7 @@ redis.port=6379
 
 # end redis confi
 
+jwt.secret = taitrong21512@gmail.com
 # redis config
 com.nip.redis.mode=single
 com.nip.redis.threads=16
